@@ -38,10 +38,14 @@ class GuyaEye:
         print('[ OK ] Took {:,.2f} seconds, {:,.2f} sec/image'.format(e - s, (e -s ) / len(hashes)))
     
     def compare_image(self):
+        """
+            Returns a list of a maximum of 10 images where from lowest distance to maximum distance, with the lowest distance being the closest match.
+            A distance of 0 is an exact match.
+        """
         self.db = Database()
         l, h = self.hash_image(self.compare)
         res = self.db.compare_encoding(h)
-        print(res)
+        pprint(res)
 
     def hash_image(self, image):
         img = Image.open(image)
