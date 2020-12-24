@@ -1,0 +1,6 @@
+imagehash
+pillow
+numpy
+argparse
+psycopg2
+python-dotenv
