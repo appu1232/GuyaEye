@@ -42,7 +42,7 @@ class Database:
         self.db.commit()
 
     def compare_encoding(self, encoding):
-        sql = "SELECT encs.label, encs.distance FROM (SELECT label,  ((get_byte(hash, 11) * 65536 + get_byte(hash, 12) * 256 + get_byte(hash, 13)) - ((get_byte('\\x{}', 11) * 65536 + get_byte('\\x{}', 12) * 256 + get_byte('\\x{}', 13)))) as distance FROM encodings) AS encs WHERE encs.distance >= 0 GROUP BY encs.label, encs.distance ORDER BY encs.distance ASC LIMIT 10".format(encoding, encoding, encoding)
+        sql = "SELECT encs.label, sqrt(power(encs.distance, 2)) AS similarity FROM (SELECT label,  ((get_byte(hash, 11) * 65536 + get_byte(hash, 12) * 256 + get_byte(hash, 13)) - ((get_byte('\\x{}', 11) * 65536 + get_byte('\\x{}', 12) * 256 + get_byte('\\x{}', 13)))) as distance FROM encodings) AS encs GROUP BY encs.label, similarity ORDER BY similarity ASC LIMIT 10".format(encoding, encoding, encoding)
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
