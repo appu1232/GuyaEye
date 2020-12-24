@@ -22,12 +22,23 @@ class GuyaEye:
         self.compare = self.kwargs['compare']
         self.threads = self.kwargs['threads']
         self.recursive = self.kwargs['recursive']
-        self.include_extensions = self.kwargs['include_extensions'].split(",") if self.kwargs['include_extensions'] else False
-        self.exclude_extensions = self.kwargs['exclude_extensions'].split(",") if self.kwargs['exclude_extensions'] else False
+        self.include_extensions = (
+            self.kwargs["include_extensions"].split(",")
+            if self.kwargs["include_extensions"]
+            else False
+        )
+        self.exclude_extensions = (
+            self.kwargs["exclude_extensions"].split(",")
+            if self.kwargs["exclude_extensions"]
+            else False
+        )
 
-        if self.images: self.create_database()
-        elif self.compare: self.compare_image()
-        else: print('[ ERROR ] Please select either "python src/main.py --images <directory>" or python src/main.py --compare <image>"!')
+        if self.images:
+            self.create_database()
+        elif self.compare:
+            self.compare_image()
+        else:
+            print('[ ERROR ] Please select either "python src/main.py --images <directory>" or python src/main.py --compare <image>"!')
 
     def create_database(self):
         s = time.time()
@@ -35,9 +46,13 @@ class GuyaEye:
         for image_file in glob.iglob(self.images + "/**", recursive=self.recursive):
             if not os.path.isfile(image_file):
                 continue
-            elif self.include_extensions and not any(image_file.endswith(ext) for ext in self.include_extensions):
+            elif self.include_extensions and not any(
+                image_file.endswith(ext) for ext in self.include_extensions
+            ):
                 continue
-            elif self.exclude_extensions and any(image_file.endswith(ext) for ext in self.exclude_extensions):
+            elif self.exclude_extensions and any(
+                image_file.endswith(ext) for ext in self.exclude_extensions
+            ):
                 continue
             image_files.append(os.path.join(self.images, image_file))
         pool = Pool(self.threads)
