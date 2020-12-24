@@ -1,12 +1,15 @@
-import argparse, imagehash, time, os
+import argparse
 import glob
-from PIL import Image
-from pprint import pprint
+import os
+import time
 from multiprocessing import Pool
-from db import Database
+from pprint import pprint
 
+import imagehash
 from dotenv import load_dotenv
+from PIL import Image
 
+from db import Database
 
 load_dotenv(verbose=True)
 
