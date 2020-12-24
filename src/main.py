@@ -54,7 +54,7 @@ class GuyaEye:
                 image_file.endswith(ext) for ext in self.exclude_extensions
             ):
                 continue
-            image_files.append(os.path.join(self.images, image_file))
+            image_files.append(os.path.abspath(os.path.join(self.images, image_file)))
         pool = Pool(self.threads)
 
         hashes = pool.map(self.hash_image, image_files)
